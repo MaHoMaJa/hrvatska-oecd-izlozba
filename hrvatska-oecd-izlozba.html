@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hrvatska u OECD zrcalu — IRMO Digitalna Izložba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --navy: #0D2B55;
+    --oecd-blue: #1A6FAA;
+    --light-blue: #4CA3DD;
+    --sky: #D6EEFF;
+    --red: #C0392B;
+    --gold: #E8A922;
+    --cream: #FAF8F3;
+    --ink: #1A1A2E;
+    --mid: #4A5568;
+    --border: #DDE5F0;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13, 43, 85, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    width: 32px; height: 32px;
+    background: var(--gold);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--navy);
+  }
+
+  .nav-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .nav-links a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 60px;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(76,163,221,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(76,163,221,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(26,111,170,0.3) 0%, transparent 70%);
+    top: -100px; right: -200px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(232,169,34,0.15);
+    border: 1px solid rgba(232,169,34,0.4);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge span { font-size: 0.85rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-rule {
+    flex: 1;
+    max-width: 80px;
+    height: 2px;
+    background: var(--oecd-blue);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--light-blue);
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.72);
+    max-width: 640px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stat {
+    border-left: 3px solid var(--oecd-blue);
+    padding-left: 1rem;
+  }
+
+  .hero-stat strong {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .hero-stat span {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .hero-cta:hover { background: #f0b52e; transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: bob 2s ease-in-out infinite;
+  }
+
+  .hero-scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4));
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { scroll-margin-top: 70px; }
+
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--oecd-blue);
+    background: var(--sky);
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-lead {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--mid);
+    max-width: 720px;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── SECTION 1: ŠTO JE OECD ─── */
+  #sto-je { background: var(--white); }
+
+  .oecd-facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .fact-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .fact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(13,43,85,0.1);
+  }
+
+  .fact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--oecd-blue), var(--light-blue));
+  }
+
+  .fact-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .fact-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .fact-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--oecd-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .fact-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--mid);
+  }
+
+  .croatia-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A4080 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    color: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .croatia-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+
+  .croatia-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+  }
+
+  .timeline-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .timeline-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gold);
+    min-width: 50px;
+    padding-top: 0.1rem;
+  }
+
+  .timeline-text {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    padding-left: 1rem;
+  }
+
+  /* ─── SECTION 2: EKOSUSTAV ─── */
+  #ekosustav { background: var(--cream); }
+
+  .publications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .pub-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pub-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(13,43,85,0.12);
+  }
+
+  .pub-card-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pub-icon {
+    width: 48px; height: 48px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .pub-icon.blue { background: var(--sky); }
+  .pub-icon.green { background: #E8F5E9; }
+  .pub-icon.orange { background: #FFF3E0; }
+  .pub-icon.purple { background: #F3E5F5; }
+  .pub-icon.teal { background: #E0F7FA; }
+  .pub-icon.red { background: #FFEBEE; }
+
+  .pub-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+  }
+
+  .pub-type {
+    font-size: 0.75rem;
+    color: var(--mid);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .pub-card-body {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .pub-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--mid);
+    margin-bottom: 1rem;
+  }
+
+  .pub-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    background: var(--sky);
+    color: var(--oecd-blue);
+    letter-spacing: 0.03em;
+  }
+
+  .tag.accent { background: rgba(232,169,34,0.15); color: var(--gold); }
+
+  .pub-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--oecd-blue);
+    text-decoration: none;
+    margin-top: 0.75rem;
+  }
+
+  .pub-link:hover { color: var(--navy); }
+
+  /* ─── SECTION 3: KAKO ISTRAŽIVAČI ─── */
+  #istrazivaci { background: var(--navy); }
+  #istrazivaci .section-label { background: rgba(76,163,221,0.15); color: var(--light-blue); }
+  #istrazivaci .section-title { color: var(--white); }
+  #istrazivaci .section-lead { color: rgba(255,255,255,0.65); }
+
+  .use-cases {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .use-case {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 1.75rem;
+    transition: background 0.2s;
+  }
+
+  .use-case:hover { background: rgba(255,255,255,0.08); }
+
+  .use-case-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .use-case h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .use-case p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+  }
+
+  .use-case-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .source-chip {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    background: rgba(26,111,170,0.3);
+    color: var(--light-blue);
+    border: 1px solid rgba(76,163,221,0.3);
+  }
+
+  .irmo-highlight {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(232,169,34,0.15), rgba(232,169,34,0.05));
+    border: 1px solid rgba(232,169,34,0.3);
+    border-radius: 8px;
+    padding: 1.75rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .irmo-highlight-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+
+  .irmo-highlight h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .irmo-highlight p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ─── SECTION 4: VIDLJIVOST ─── */
+  #vidljivost { background: var(--white); }
+
+  .charts-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .chart-panel {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+
+  .chart-panel.wide { grid-column: 1 / -1; }
+
+  .chart-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .chart-subtitle {
+    font-size: 0.78rem;
+    color: var(--mid);
+    margin-bottom: 1.25rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 240px;
+  }
+
+  .chart-wrap.tall { height: 300px; }
+
+  .methodology-note {
+    background: var(--sky);
+    border-left: 4px solid var(--oecd-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .methodology-note strong {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--oecd-blue);
+    margin-bottom: 0.5rem;
+  }
+
+  .methodology-note p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--mid);
+  }
+
+  /* ─── SECTION 5: PRAZNINE ─── */
+  #praznine { background: var(--cream); }
+
+  .gaps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .gap-card {
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid;
+  }
+
+  .gap-card.gap {
+    background: #FFF5F5;
+    border-color: #FFCDD2;
+  }
+
+  .gap-card.opportunity {
+    background: #F0FFF4;
+    border-color: #C6F6D5;
+  }
+
+  .gap-card-type {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .gap-card.gap .gap-card-type { color: var(--red); }
+  .gap-card.opportunity .gap-card-type { color: #2E7D32; }
+
+  .gap-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+  }
+
+  .gap-card p {
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: var(--mid);
+  }
+
+  .recommendations {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 2.5rem;
+  }
+
+  .recommendations h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .recommendations p.lead {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .rec-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .rec-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .rec-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(232,169,34,0.4);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 36px;
+  }
+
+  .rec-text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .rec-text strong {
+    display: block;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+    font-size: 0.92rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #07192E;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .footer-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--light-blue); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .charts-layout { grid-template-columns: 1fr; }
+    .charts-layout .chart-panel.wide { grid-column: 1; }
+    .use-cases { grid-template-columns: 1fr; }
+    .use-cases .irmo-highlight { grid-column: 1; }
+    .gaps-grid { grid-template-columns: 1fr; }
+    .rec-list { grid-template-columns: 1fr; }
+    .croatia-box { grid-template-columns: 1fr; }
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── INTERACTIVE FILTER ─── */
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .filter-btn {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.45rem 1rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+
+  /* highlight bar */
+  .highlight-stat {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--sky);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .h-stat {
+    text-align: center;
+  }
+
+  .h-stat strong {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 2.2rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .h-stat span {
+    font-size: 0.78rem;
+    color: var(--oecd-blue);
+    font-weight: 500;
+  }
+
+  .h-stat-divider {
+    width: 1px;
+    height: 50px;
+    background: var(--border);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">
+      <div class="nav-logo">IR</div>
+      <span class="nav-title">IRMO Digitalna Izložba</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sto-je">Što je OECD?</a></li>
+      <li><a href="#ekosustav">Ekosustav</a></li>
+      <li><a href="#istrazivaci">Istraživači</a></li>
+      <li><a href="#vidljivost">Vidljivost</a></li>
+      <li><a href="#praznine">Prilike</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>📊</span> IRMO &mdash; Digitalna izložba &mdash; 2025
+    </div>
+    <h1 class="hero-title">
+      Hrvatska u<br><em>OECD zrcalu</em>
+    </h1>
+    <div class="hero-subtitle-line">
+      <div class="hero-rule"></div>
+      <p class="hero-subtitle">Od podataka do politika</p>
+    </div>
+    <p class="hero-description">
+      Digitalna izložba o OECD-ovim informacijskim resursima i vidljivosti
+      hrvatske znanosti u međunarodnim policy dokumentima. Izložba istražuje
+      kako istraživači, kreatori politika i javnost mogu koristiti OECD ekosustav
+      te gdje se Hrvatska pojavljuje — i gdje nedostaje.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>38</strong>
+        <span>Zemalja članica OECD-a</span>
+      </div>
+      <div class="hero-stat">
+        <strong>2023.</strong>
+        <span>Hrvatska podnijela zahtjev</span>
+      </div>
+      <div class="hero-stat">
+        <strong>5</strong>
+        <span>Sekcija izložbe</span>
+      </div>
+    </div>
+    <a href="#sto-je" class="hero-cta">
+      Istraži izložbu →
+    </a>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Skrolaj</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ SEKCIJA 1: ŠTO JE OECD ═══════════════ -->
+<section id="sto-je">
+  <div class="section-container">
+    <span class="section-label fade-in">01 — Kontekst</span>
+    <h2 class="section-title fade-in">Što je OECD i<br>zašto je relevantan za Hrvatsku?</h2>
+    <div class="section-divider fade-in"></div>
+    <p class="section-lead fade-in">
+      Organizacija za ekonomsku suradnju i razvoj (OECD) jedna je od najutjecajnijih
+      međunarodnih organizacija u oblikovanju javnih politika. Njena statistička, analitička
+      i normativna produkcija izravno utječe na obrazovne, zdravstvene, ekonomske i
+      istraživačke politike država članica i kandidatkinja.
+    </p>
+
+    <div class="oecd-facts-grid fade-in">
+      <div class="fact-card">
+        <div class="fact-icon">🏛️</div>
+        <div class="fact-number">1961.</div>
+        <div class="fact-label">Godina osnivanja</div>
+        <p class="fact-desc">OECD nasljeđuje OEEC osnovan 1948. za koordinaciju Marshallovog plana obnove Europe.</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">🌍</div>
+        <div class="fact-number">38</div>
+        <div class="fact-label">Zemalja članica</div>
+        <p class="fact-desc">Uglavnom razvijene demokracije s tržišnom ekonomijom, zajedno čine oko 60% globalnog BDP-a.</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">📚</div>
+        <div class="fact-number">500+</div>
+        <div class="fact-label">Publikacija godišnje</div>
+        <p class="fact-desc">OECD je jedan od najvećih izdavača istraživačkih i statističkih materijala o javnim politikama.</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">🔬</div>
+        <div class="fact-number">250+</div>
+        <div class="fact-label">Indikatora za Hrvatsku</div>
+        <p class="fact-desc">Hrvatska je već u velikom broju OECD baza podataka kao promatračka zemlja ili partnerica.</p>
+      </div>
+    </div>
+
+    <div class="croatia-box fade-in">
+      <div>
+        <h3>Hrvatska i OECD: kronologija</h3>
+        <p>Hrvatska formalno nije članica OECD-a, no pristupni proces koji je pokrenut 2023. čini ovaj kontekst sve relevantnijim za istraživanje i policy analizu u IRMO-u.</p>
+        <p>Pridruživanje OECD-u podrazumijeva dubinsku analizu usklađenosti s OECD standardima u desetcima područja — od obrazovanja i zdravstva do pravosuđa, korporativnog upravljanja i inovacijske politike.</p>
+      </div>
+      <div class="timeline-mini">
+        <div class="timeline-item">
+          <span class="timeline-year">2000-te</span>
+          <div class="timeline-text">Hrvatska sudjeluje u PISA istraživanjima; uključivanje u neke OECD baze</div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2015.</span>
+          <div class="timeline-text">Hrvatska postaje sudionica OECD-ovog Global Forum on Transparency</div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2018.</span>
+          <div class="timeline-text">Jačanje suradnje u području obrazovnih politika (OECD Reviews of National Policies for Education)</div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2023.</span>
+          <div class="timeline-text">Hrvatska podnosi formalni zahtjev za punopravno članstvo u OECD-u</div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">danas</span>
+          <div class="timeline-text">Tekuće pristupne recenzije; aktivno praćenje usklađenosti politika</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ SEKCIJA 2: EKOSUSTAV ═══════════════ -->
+<section id="ekosustav">
+  <div class="section-container">
+    <span class="section-label fade-in">02 — Informacijski ekosustav</span>
+    <h2 class="section-title fade-in">OECD publikacije i baze<br>relevantne za Hrvatsku</h2>
+    <div class="section-divider fade-in"></div>
+    <p class="section-lead fade-in">
+      OECD producira iznimno bogat informacijski ekosustav: od godišnjih komparativnih izvještaja
+      do interaktivnih statističkih baza podataka. Ovaj pregled ključnih resursa osmišljen je kao
+      vodič za istraživače, kreatore politika i knjižničare koji rade s OECD izvorima.
+    </p>
+
+    <div class="filter-bar fade-in">
+      <button class="filter-btn active" onclick="filterPubs('sve', this)">Sve</button>
+      <button class="filter-btn" onclick="filterPubs('statistika', this)">Statistika</button>
+      <button class="filter-btn" onclick="filterPubs('obrazovanje', this)">Obrazovanje</button>
+      <button class="filter-btn" onclick="filterPubs('inovacije', this)">Inovacije & Znanost</button>
+      <button class="filter-btn" onclick="filterPubs('zdravlje', this)">Zdravlje</button>
+    </div>
+
+    <div class="publications-grid" id="pubs-grid">
+
+      <div class="pub-card fade-in" data-category="statistika">
+        <div class="pub-card-header">
+          <div class="pub-icon blue">📊</div>
+          <div>
+            <div class="pub-name">OECD iLibrary</div>
+            <div class="pub-type">Centralni repozitorij</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Centralna platforma koja agregira sve OECD publikacije, baze podataka, radne materijale i statistike. Besplatan pristup za većinu sadržaja; pretplatnički za neke baze.</p>
+          <div class="pub-tags">
+            <span class="tag">Besplatno</span>
+            <span class="tag">Open access</span>
+            <span class="tag">Hrvatska uključena</span>
+          </div>
+          <a href="https://www.oecd-ilibrary.org" target="_blank" class="pub-link">Posjeti → oecd-ilibrary.org</a>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in" data-category="obrazovanje">
+        <div class="pub-card-header">
+          <div class="pub-icon orange">🎓</div>
+          <div>
+            <div class="pub-name">PISA</div>
+            <div class="pub-type">Godišnje istraživanje</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Programme for International Student Assessment — međunarodno mjerenje pismenosti učenika. Hrvatska sudjeluje redovito i jedna je od aktivno praćenih zemalja.</p>
+          <div class="pub-tags">
+            <span class="tag">Obrazovanje</span>
+            <span class="tag accent">HR sudjeluje</span>
+            <span class="tag">15-godišnjaci</span>
+          </div>
+          <a href="https://www.oecd.org/pisa/" target="_blank" class="pub-link">Posjeti → oecd.org/pisa</a>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in" data-category="obrazovanje">
+        <div class="pub-card-header">
+          <div class="pub-icon green">📗</div>
+          <div>
+            <div class="pub-name">Education at a Glance</div>
+            <div class="pub-type">Godišnji izvještaj</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Sveobuhvatni statistički pregled obrazovnih sustava. Uključuje podatke o upisima, financiranju, ishodima, nastavnom kadru — i Hrvatska je obuhvaćena u velikom broju indikatora.</p>
+          <div class="pub-tags">
+            <span class="tag">Obrazovanje</span>
+            <span class="tag">Komparativno</span>
+            <span class="tag accent">HR podaci</span>
+          </div>
+          <a href="https://www.oecd.org/education/education-at-a-glance/" target="_blank" class="pub-link">Posjeti →</a>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in" data-category="zdravlje">
+        <div class="pub-card-header">
+          <div class="pub-icon red">❤️</div>
+          <div>
+            <div class="pub-name">Health at a Glance</div>
+            <div class="pub-type">Dvogodišnji izvještaj</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Komparativna analiza zdravstvenih sustava, ishoda i politika. Posebno relevantno za praćenje Reform Agenda pristupnog procesa u području javnog zdravlja.</p>
+          <div class="pub-tags">
+            <span class="tag">Zdravlje</span>
+            <span class="tag">Europska verzija</span>
+            <span class="tag accent">HR podaci</span>
+          </div>
+          <a href="https://www.oecd.org/health/health-at-a-glance-europe.htm" target="_blank" class="pub-link">Posjeti →</a>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in" data-category="inovacije">
+        <div class="pub-card-header">
+          <div class="pub-icon purple">🔬</div>
+          <div>
+            <div class="pub-name">MSTI Baza podataka</div>
+            <div class="pub-type">Statistička baza</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Main Science and Technology Indicators — ključna baza za praćenje ulaganja u R&D, broj istraživača, patenata i inovacijske aktivnosti. Esencijalna za science policy analizu.</p>
+          <div class="pub-tags">
+            <span class="tag">R&D</span>
+            <span class="tag">Inovacije</span>
+            <span class="tag">Financiranje</span>
+          </div>
+          <a href="https://www.oecd.org/sti/msti.htm" target="_blank" class="pub-link">Posjeti →</a>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in" data-category="inovacije">
+        <div class="pub-card-header">
+          <div class="pub-icon teal">🌐</div>
+          <div>
+            <div class="pub-name">OECD.Stat / Data Explorer</div>
+            <div class="pub-type">Interaktivna baza</div>
+          </div>
+        </div>
+        <div class="pub-card-body">
+          <p class="pub-desc">Centralni statistički portal s mogućnošću preuzimanja podataka. Pokriva stotine tema od ekonomije do okoliša. Dostupan API za automatiziranu analizu podataka u R ili Python.</p>
+          <div class="pub-tags">
+            <span class="tag">API</span>
+            <span class="tag">CSV preuzimanje</span>
+            <span class="tag accent">Besplatno</span>
+          </div>
+          <a href="https://stats.oecd.org" target="_blank" class="pub-link">Posjeti → stats.oecd.org</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="methodology-note fade-in">
+      <strong>Napomena za istraživače</strong>
+      <p>OECD iLibrary podatke moguće je preuzimati u CSV/Excel formatu ili koristiti putem API-ja. Za bibliometrijsku analizu policy vidljivosti preporučuje se kombiniranje s bazom <strong>Overton</strong> koja indeksira OECD dokumente i omogućuje praćenje citiranja istraživačkih radova u policy izvorima.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ SEKCIJA 3: ISTRAŽIVAČI ═══════════════ -->
+<section id="istrazivaci">
+  <div class="section-container">
+    <span class="section-label fade-in">03 — Primjena</span>
+    <h2 class="section-title fade-in">Kako istraživači i kreatori politika<br>koriste OECD izvore</h2>
+    <div class="section-divider fade-in" style="background:var(--gold)"></div>
+    <p class="section-lead fade-in">
+      OECD resursi nisu samo statistički atlas — oni su aktivni alati u oblikovanju istraživačkih
+      hipoteza, benchmarkinga politika i argumentacije u policy procesima. Evo kako različite
+      korisničke zajednice pristupaju tim izvorima.
+    </p>
+
+    <div class="use-cases fade-in">
+
+      <div class="use-case">
+        <div class="use-case-num">01 — Akademski istraživači</div>
+        <h3>Komparativna analiza politika</h3>
+        <p>Koriste OECD podatke za komparativne studije zemalja, longitudinalne analize trendova i testiranje hipoteza o učinkovitosti različitih policy pristupa.</p>
+        <div class="use-case-sources">
+          <span class="source-chip">OECD iLibrary</span>
+          <span class="source-chip">MSTI</span>
+          <span class="source-chip">Education at a Glance</span>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-num">02 — Kreatori politika</div>
+        <h3>Benchmarking i preuzimanje dobre prakse</h3>
+        <p>Ministarstva i vladine agencije koriste OECD recenzije i preporuke kao vanjsku legitimaciju za reforme i za usporedbu s praksom zemalja OECD-a.</p>
+        <div class="use-case-sources">
+          <span class="source-chip">Economic Surveys</span>
+          <span class="source-chip">Going for Growth</span>
+          <span class="source-chip">Policy Briefs</span>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-num">03 — Think-tankovi i instituti</div>
+        <h3>Policy analiza i zagovaranje</h3>
+        <p>Organizacije poput IRMO-a koriste OECD podatke za pozicioniranje preporuka, kontekstualizaciju istraživanja i komunikaciju prema donositeljima odluka.</p>
+        <div class="use-case-sources">
+          <span class="source-chip">OECD Data Explorer</span>
+          <span class="source-chip">Better Life Index</span>
+          <span class="source-chip">Science, Technology and Innovation</span>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-num">04 — Knjižničari i info-stručnjaci</div>
+        <h3>Upravljanje znanjem i info-pismenost</h3>
+        <p>Knjižničari imaju ključnu ulogu u educiranju korisnika o OECD resursima, organiziranju pristupa i podršci u korištenju API-ja i statističkih baza.</p>
+        <div class="use-case-sources">
+          <span class="source-chip">OECD iLibrary</span>
+          <span class="source-chip">OECD API</span>
+          <span class="source-chip">Overton</span>
+        </div>
+      </div>
+
+      <div class="irmo-highlight">
+        <div class="irmo-highlight-icon">🏢</div>
+        <div>
+          <h3>IRMO i OECD resursi — primjer dobre prakse</h3>
+          <p>IRMO kao vodeći hrvatski think-tank za međunarodne odnose i razvoj redovito koristi OECD izvore u istraživanjima EU politika, razvojnih trendova i geopolitičkih kretanja. Pristupni proces OECD-u otvara novu dimenziju istraživačkog rada — praćenje i analizu usklađivanja hrvatskih politika s OECD standardima postaje prioritetno istraživačko područje.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ SEKCIJA 4: VIDLJIVOST ═══════════════ -->
+<section id="vidljivost">
+  <div class="section-container">
+    <span class="section-label fade-in">04 — Bibliometrijska analiza</span>
+    <h2 class="section-title fade-in">Hrvatska u OECD dokumentima:<br>analiza vidljivosti</h2>
+    <div class="section-divider fade-in"></div>
+    <p class="section-lead fade-in">
+      Koliko se često hrvatska istraživanja pojavljuju u OECD policy dokumentima?
+      Analiza temeljena na bazi Overton i OECD iLibrary pokazuje parcijalni uvid u
+      vidljivost hrvatske znanosti u međunarodnom policy diskursu.
+    </p>
+
+    <div class="highlight-stat fade-in">
+      <div class="h-stat">
+        <strong>142</strong>
+        <span>HR citata u OECD dok.</span>
+      </div>
+      <div class="h-stat-divider"></div>
+      <div class="h-stat">
+        <strong>2015–2024</strong>
+        <span>Analizirano razdoblje</span>
+      </div>
+      <div class="h-stat-divider"></div>
+      <div class="h-stat">
+        <strong>8</strong>
+        <span>Tematskih područja</span>
+      </div>
+      <div class="h-stat-divider"></div>
+      <div class="h-stat">
+        <strong>Overton</strong>
+        <span>Izvor podataka</span>
+      </div>
+    </div>
+
+    <div class="charts-layout fade-in">
+
+      <div class="chart-panel">
+        <div class="chart-title">Citiranost u OECD dokumentima po godinama</div>
+        <div class="chart-subtitle">Broj HR radova citiranih / 2015–2024</div>
+        <div class="chart-wrap">
+          <canvas id="chartTrend"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-title">Tematska distribucija citiranja</div>
+        <div class="chart-subtitle">Udio po istraživačkim područjima</div>
+        <div class="chart-wrap">
+          <canvas id="chartTopics"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel wide">
+        <div class="chart-title">Vidljivost prema tipu OECD dokumenta</div>
+        <div class="chart-subtitle">U kojim tipovima OECD publikacija se citiraju HR istraživanja?</div>
+        <div class="chart-wrap tall">
+          <canvas id="chartDocTypes"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="methodology-note fade-in">
+      <strong>Metodološka napomena</strong>
+      <p>
+        Prikazani podaci su ilustrativni i temelje se na pretraživanju baze Overton po afilijacijama
+        hrvatskih istraživačkih institucija (IRMO, HAZU, Sveučilište u Zagrebu, UNIZG, UNIST i dr.)
+        u OECD policy dokumentima. Za punopravnu analizu potrebna je kombinacija Overton API-ja i
+        ručne verifikacije rezultata. Ova vizualizacija služi kao prototip — finalni podaci zahtijevaju
+        empirijsku provjeru.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════ SEKCIJA 5: PRAZNINE I PRILIKE ═══════════════ -->
+<section id="praznine">
+  <div class="section-container">
+    <span class="section-label fade-in">05 — Interpretacija</span>
+    <h2 class="section-title fade-in">Praznine i prilike:<br>što nam govore podaci?</h2>
+    <div class="section-divider fade-in"></div>
+    <p class="section-lead fade-in">
+      Analiza vidljivosti otkriva ne samo gdje je hrvatska znanost prisutna u OECD dokumentima,
+      nego i gdje su sistemski izostanci — i što to znači za istraživačku zajednicu i policy aktere.
+    </p>
+
+    <div class="gaps-grid fade-in">
+
+      <div class="gap-card gap">
+        <div class="gap-card-type">⚠ Praznina</div>
+        <h4>Slaba zastupljenost u ekonomskim analizama</h4>
+        <p>Unatoč bogatoj tradiciji ekonomskog istraživanja, HR radovi rijetko se citiraju u OECD Economic Surveys i Country Profiles.</p>
+      </div>
+
+      <div class="gap-card gap">
+        <div class="gap-card-type">⚠ Praznina</div>
+        <h4>Nedostatak engleski pisane produkcije</h4>
+        <p>Znatan dio vrijednih HR istraživanja ostaje nedostupan OECD analitičarima zbog nedostatka engleskih prijevoda ili međunarodne objave.</p>
+      </div>
+
+      <div class="gap-card gap">
+        <div class="gap-card-type">⚠ Praznina</div>
+        <h4>Niska vidljivost u STI dokumentima</h4>
+        <p>Hrvatska je slabo zastupljena u OECD Science, Technology and Innovation Outlook — ključnom dokumentu za pozicioniranje istraživačkih politika.</p>
+      </div>
+
+      <div class="gap-card opportunity">
+        <div class="gap-card-type">✦ Prilikа</div>
+        <h4>Rast u obrazovnim politikama</h4>
+        <p>Trend citiranja HR istraživanja raste u OECD obrazovnim dokumentima, posebno u kontekstu PISA analiza i reforme kurikuluma.</p>
+      </div>
+
+      <div class="gap-card opportunity">
+        <div class="gap-card-type">✦ Prilikа</div>
+        <h4>Pristupni proces kao katalizator</h4>
+        <p>Pristupne recenzije (accession reviews) nužno uključuju analizu HR politika — to je sistemska prilika za povećanje vidljivosti domaće stručnosti.</p>
+      </div>
+
+      <div class="gap-card opportunity">
+        <div class="gap-card-type">✦ Prilikа</div>
+        <h4>Regionalni think-tank pozicija</h4>
+        <p>IRMO može pozicionirati se kao regionalni ekspert za jugoistočnu Europu u OECD kontekstu — popunjavajući prazninu u regionalnoj analitici.</p>
+      </div>
+
+    </div>
+
+    <div class="recommendations fade-in">
+      <h3>Preporuke za istraživačku zajednicu</h3>
+      <p class="lead">Na temelju analize vidljivosti i identificiranih praznina, predlažemo sljedeće korake:</p>
+      <div class="rec-list">
+        <div class="rec-item">
+          <div class="rec-num">01</div>
+          <div class="rec-text">
+            <strong>Sustavno praćenje Overton baze</strong>
+            Implementirati redovito praćenje pojavljivanja HR institucija u Overton policy bazi kao dio evaluacije istraživačkog utjecaja.
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">02</div>
+          <div class="rec-text">
+            <strong>Strategija engleske objave</strong>
+            Prioritizirati prevođenje i međunarodnu objavu istraživanja u područjima gdje je HR expertise visok, a vidljivost niska.
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">03</div>
+          <div class="rec-text">
+            <strong>Aktivno umrežavanje s OECD sektorima</strong>
+            IRMO-ovi istraživači trebaju izravno kontaktirati relevantne OECD direktorate i sudjelovati u konzultacijskim procesima.
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">04</div>
+          <div class="rec-text">
+            <strong>Open Access objava</strong>
+            Istraživanja dostupna u otvorenom pristupu imaju znatno višu vidljivost u policy bazama. Preporuča se korištenje DABAR repozitorija.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo-text">Hrvatska u OECD zrcalu</div>
+    <p class="footer-desc">
+      Digitalna izložba Instituta za razvoj i međunarodne odnose (IRMO), Zagreb.<br>
+      Konceptualna izložba o informacijskim resursima OECD-a i vidljivosti<br>
+      hrvatske znanosti u međunarodnim policy dokumentima.
+    </p>
+    <div class="footer-links">
+      <a href="https://www.irmo.hr" target="_blank">IRMO</a>
+      <a href="https://www.oecd-ilibrary.org" target="_blank">OECD iLibrary</a>
+      <a href="https://www.overton.io" target="_blank">Overton</a>
+      <a href="https://dabar.srce.hr" target="_blank">DABAR</a>
+      <a href="https://www.oecd.org/croatia/" target="_blank">OECD o Hrvatskoj</a>
+    </div>
+    <div class="footer-copy">© 2025 IRMO — Institut za razvoj i međunarodne odnose</div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+// ─── SCROLL ANIMATIONS ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+
+// ─── FILTER ───
+function filterPubs(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#pubs-grid .pub-card').forEach(card => {
+    if (category === 'sve' || card.dataset.category === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+
+// ─── CHARTS ───
+const chartDefaults = {
+  font: { family: "'DM Sans', sans-serif" },
+};
+Chart.defaults.font = chartDefaults.font;
+
+// Chart 1: Trend
+const ctx1 = document.getElementById('chartTrend').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'],
+    datasets: [{
+      label: 'Citati HR radova',
+      data: [8, 10, 11, 13, 14, 17, 16, 22, 18, 13],
+      borderColor: '#1A6FAA',
+      backgroundColor: 'rgba(26,111,170,0.08)',
+      borderWidth: 2.5,
+      pointBackgroundColor: '#1A6FAA',
+      pointRadius: 4,
+      fill: true,
+      tension: 0.4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+
+// Chart 2: Donut
+const ctx2 = document.getElementById('chartTopics').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Obrazovanje','Zdravlje','Ekonomija','Inovacije','Okoliš','Upravljanje','Ostalo'],
+    datasets: [{
+      data: [30, 22, 18, 12, 8, 6, 4],
+      backgroundColor: ['#1A6FAA','#E8A922','#4CA3DD','#0D2B55','#2E7D32','#C0392B','#888'],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12 } }
+    }
+  }
+});
+
+// Chart 3: Bar
+const ctx3 = document.getElementById('chartDocTypes').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: ['Working Papers','Policy Briefs','Economic Surveys','Country Reviews','STI Outlook','Education Reports','Health Reports','Better Life'],
+    datasets: [{
+      label: 'Broj HR citata',
+      data: [45, 28, 22, 18, 10, 8, 7, 4],
+      backgroundColor: [
+        '#1A6FAA','#1A6FAA','#4CA3DD','#4CA3DD',
+        '#0D2B55','#E8A922','#E8A922','#888'
+      ],
+      borderRadius: 4,
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
