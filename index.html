@@ -1342,6 +1342,72 @@
     .oecd-cover-mockup { width: 120px; aspect-ratio: 3/4; }
   }
 
+
+  /* ─── REAL COVER IMAGE ─── */
+  .cite-cover-link {
+    display: block;
+    width: 160px;
+    min-width: 160px;
+    flex-shrink: 0;
+    text-decoration: none;
+    position: relative;
+    border-radius: 4px 8px 8px 4px;
+    overflow: hidden;
+    box-shadow: -4px 4px 20px rgba(0,0,0,0.5), 4px 0 0 rgba(0,0,0,0.15) inset;
+    transition: transform 0.2s, box-shadow 0.2s;
+    aspect-ratio: 3/4;
+    background: #1a3a5c;
+  }
+
+  .cite-cover-link:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: -6px 8px 28px rgba(0,0,0,0.6), 4px 0 0 rgba(0,0,0,0.15) inset;
+  }
+
+  .cite-cover-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 3px 7px 7px 3px;
+  }
+
+  /* fallback mockup shown when img loads */
+  .cite-cover-link .cover-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px 12px 12px 18px;
+  }
+
+  /* hide fallback once real image loads */
+  .cite-cover-link.img-loaded .cover-fallback { display: none; }
+  .cite-cover-link.img-loaded img { opacity: 1; }
+  .cite-cover-link:not(.img-loaded) img { opacity: 0; position: absolute; }
+
+  .cite-cover-link .cover-hover-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    color: rgba(255,255,255,0.9);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 0.6rem 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-align: center;
+  }
+
+  .cite-cover-link:hover .cover-hover-label { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .cite-cover-link { width: 120px; }
+  }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 768px) {
     .nav-links { display: none; }
@@ -2336,7 +2402,7 @@
 
       <!-- ── 1. STATE OF HEALTH CROATIA 2025 ── -->
       <div class="citation-row" data-topic="zdravlje">
-        <div class="oecd-cover-mockup cover-health">
+        <div class="oecd-cover-mockup cover-health" data-doi="42a860b3-en" data-title="Croatia — State of Health in the EU" data-url="https://doi.org/10.1787/42a860b3-en" data-color="cover-health">
           <div class="cover-spine"></div>
           <div class="cover-body">
             <div>
@@ -2370,7 +2436,7 @@
 
       <!-- ── 2. INVESTMENT POLICY REVIEWS CROATIA 2019 ── -->
       <div class="citation-row" data-topic="ekonomija">
-        <div class="oecd-cover-mockup cover-invest">
+        <div class="oecd-cover-mockup cover-invest" data-doi="2bf079ba-en" data-title="OECD Investment Policy Reviews: Croatia 2019" data-url="https://doi.org/10.1787/2bf079ba-en" data-color="cover-invest">
           <div class="cover-spine"></div>
           <div class="cover-body">
             <div>
@@ -2416,7 +2482,7 @@
 
       <!-- ── 3. DUE DILIGENCE FOR SAND SUPPLY CHAINS 2026 ── -->
       <div class="citation-row" data-topic="okoliš">
-        <div class="oecd-cover-mockup cover-env">
+        <div class="oecd-cover-mockup cover-env" data-doi="7be0093e-en" data-title="Due Diligence for Responsible Sand and Silicate Supply Chains" data-url="https://doi.org/10.1787/7be0093e-en" data-color="cover-env">
           <div class="cover-spine"></div>
           <div class="cover-body">
             <div>
@@ -2450,7 +2516,7 @@
 
       <!-- ── 4. PHARMACEUTICAL INNOVATION ── -->
       <div class="citation-row" data-topic="farma">
-        <div class="oecd-cover-mockup cover-pharma">
+        <div class="oecd-cover-mockup cover-pharma" data-doi="9789264307438-en" data-title="Pharmaceutical Innovation and Access to Medicines" data-url="https://doi.org/10.1787/9789264307438-en" data-color="cover-pharma">
           <div class="cover-spine"></div>
           <div class="cover-body">
             <div>
@@ -2484,7 +2550,7 @@
 
       <!-- ── 5. ADVERSE OUTCOME PATHWAY CATARACTS 2026 ── -->
       <div class="citation-row" data-topic="bio">
-        <div class="oecd-cover-mockup cover-bio">
+        <div class="oecd-cover-mockup cover-bio" data-doi="ae504440-en" data-title="Adverse Outcome Pathway on Deposition of Energy Leading to Cataracts" data-url="https://doi.org/10.1787/ae504440-en" data-color="cover-bio">
           <div class="cover-spine"></div>
           <div class="cover-body">
             <div>
@@ -2974,6 +3040,58 @@ new Chart(ctx3, {
   window.addEventListener('scroll', updateSala, { passive: true });
   updateSala();
 })();
+
+
+// ─── OECD COVER IMAGES ───
+function makeCoverLink(handle, fallbackClass, fallbackTitle, docUrl) {
+  const coverUrl = `https://www.oecd-ilibrary.org/docserver/${handle}/cover.jpg`;
+  const link = document.createElement('a');
+  link.href = docUrl;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.className = `cite-cover-link ${fallbackClass}`;
+
+  // Fallback mockup (shown until image loads)
+  link.innerHTML = `
+    <div class="cover-fallback cover-body">
+      <div>
+        <div class="cover-oecd-logo">OECD</div>
+        <div class="cover-stripe"></div>
+        <div class="cover-title-text">${fallbackTitle}</div>
+      </div>
+      <div class="cover-bottom">
+        <div class="cover-doc-type">OECD Document</div>
+      </div>
+    </div>
+    <div class="cover-hover-label">Otvori dokument →</div>
+  `;
+
+  // Real cover image
+  const img = document.createElement('img');
+  img.alt = fallbackTitle;
+  img.src = coverUrl;
+  img.onload = () => link.classList.add('img-loaded');
+  img.onerror = () => { /* keep fallback */ };
+  link.appendChild(img);
+
+  return link;
+}
+
+// Replace all citation card covers with real images
+document.querySelectorAll('.citation-row').forEach(row => {
+  const mockup = row.querySelector('.oecd-cover-mockup');
+  if (!mockup) return;
+
+  const doi = mockup.dataset.doi;
+  const title = mockup.dataset.title;
+  const docUrl = mockup.dataset.url;
+  const colorClass = mockup.dataset.color || 'cover-economic';
+
+  if (!doi) return;
+
+  const link = makeCoverLink(doi, colorClass, title, docUrl);
+  mockup.parentNode.replaceChild(link, mockup);
+});
 
 // ─── CITATION FILTER ───
 function filterCites(topic, btn) {
